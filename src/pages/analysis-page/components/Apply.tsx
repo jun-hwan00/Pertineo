@@ -2,7 +2,15 @@ import { useNavigate } from "react-router-dom";
 import AnalysisHeader from "./AnalysisHeader";
 import { useAnalysisStore } from "stores/analysisStore";
 
-export default function Apply({ onPrev }: { onPrev?: () => void }) {
+export default function Apply({
+  onPrev,
+  onDownload,
+  isGenerating,
+}: {
+  onPrev?: () => void;
+  onDownload?: () => void;
+  isGenerating?: boolean;
+}) {
   const navigate = useNavigate();
   const { revisedResult, normalData } = useAnalysisStore();
 
@@ -52,16 +60,43 @@ export default function Apply({ onPrev }: { onPrev?: () => void }) {
       {/* 하단 버튼 */}
       <div className="flex justify-center gap-[16px] pt-[120px] pb-[120px]">
         <button
-          onClick={onPrev}
-          className="w-[160px] h-[44px] bg-white rounded-[6px] text-[16px] font-medium text-[#717171] shadow-[0px_0px_10px_0px_rgba(0,0,0,0.12)] border border-transparent hover:border-[#09469F] hover:text-[#09469F] transition-colors"
-        >
-          이전
-        </button>
-        <button
           onClick={() => navigate("/")}
-          className="w-[160px] h-[44px] bg-white rounded-[6px] text-[16px] font-medium text-[#717171] shadow-[0px_0px_10px_0px_rgba(0,0,0,0.12)] border border-transparent hover:border-[#09469F] hover:text-[#09469F] transition-colors"
+          className="w-[160px] h-[44px] bg-white rounded-[6px] text-[16px] font-medium text-[#0D326F] border border-[#09469F] hover:bg-[#ECF1F8] transition-all duration-200"
         >
           메인으로
+        </button>
+        <button
+          onClick={onDownload}
+          disabled={isGenerating}
+          className="w-[160px] h-[44px] bg-[#09469F] text-white text-[16px] font-medium rounded-[6px] hover:bg-[#0D326F] transition-colors disabled:opacity-60 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+        >
+          {isGenerating ? (
+            <>
+              <svg
+                className="animate-spin h-4 w-4 text-white"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+              >
+                <circle
+                  className="opacity-25"
+                  cx="12"
+                  cy="12"
+                  r="10"
+                  stroke="currentColor"
+                  strokeWidth="4"
+                />
+                <path
+                  className="opacity-75"
+                  fill="currentColor"
+                  d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"
+                />
+              </svg>
+              생성 중...
+            </>
+          ) : (
+            "리포트 다운로드"
+          )}
         </button>
       </div>
     </div>

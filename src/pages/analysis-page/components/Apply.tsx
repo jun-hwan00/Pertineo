@@ -50,7 +50,7 @@ export default function Apply({ onPrev }: { onPrev?: () => void }) {
         </div>
       </div> */}
       {/* 하단 버튼 */}
-      <div className="flex justify-center gap-[16px] pt-[120px] pb-[60px]">
+      <div className="flex justify-center gap-[16px] pt-[120px] pb-[120px]">
         <button
           onClick={onPrev}
           className="w-[160px] h-[44px] bg-white rounded-[6px] text-[16px] font-medium text-[#717171] shadow-[0px_0px_10px_0px_rgba(0,0,0,0.12)] border border-transparent hover:border-[#09469F] hover:text-[#09469F] transition-colors"

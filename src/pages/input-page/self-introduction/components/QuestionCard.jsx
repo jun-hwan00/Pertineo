@@ -55,14 +55,14 @@ function QuestionCard({ onContentChange, showPlus, showMinus, onAdd, onRemove, i
           placeholder="질문 문항을 입력해주세요"
           value={question}
           onChange={handleQuestionChange}
-          className="w-full h-[62px] bg-[#F5F5F5] px-[12px] rounded-[4px] text-[18px] font-normal leading-[120%] text-black placeholder-[#717171] outline-none"
+          className="w-full h-[62px] bg-[#F5F5F5] px-[12px] py-[18px] rounded-[4px] text-[18px] font-normal leading-[120%] text-black placeholder-[#717171] outline-none"
         />
         <div className="my-[12px] border-b border-[#B5B5B5]" />
         <textarea
           placeholder="내용을 입력해주세요"
           value={content}
           onChange={handleContentChange}
-          className="w-full h-[160px] md:h-[256px] bg-[#F5F5F5] rounded-[4px] px-[12px] py-[12px] text-[16px] font-normal leading-[150%] text-black placeholder-[#717171] outline-none resize-none"
+          className="w-full h-[160px] md:h-[256px] bg-[#F5F5F5] rounded-[4px] px-[12px] py-[18px] text-[16px] font-normal leading-[150%] text-black placeholder-[#717171] outline-none resize-none"
         />
         <div className="w-full mt-[12px] flex items-center justify-between">
           <div className="block md:hidden">

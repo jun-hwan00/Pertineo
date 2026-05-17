@@ -14,10 +14,10 @@ function BulkInputModal({ onClose, onConfirm }) {
       style={{ backgroundColor: "rgba(0, 0, 0, 0.12)" }}
       onClick={(e) => { if (e.target === e.currentTarget) onClose?.(); }}
     >
-      <div
-        className="relative w-full bg-white rounded-[12px] border border-[#E0E0E0] px-[28px] pt-[28px] pb-[24px] flex flex-col"
-        style={{ maxWidth: "1080px", height: "80vh", margin: "0 16px" }}
-      >
+     <div
+  className="relative w-full md:w-[80%] bg-white rounded-[12px] border border-[#E0E0E0] px-[28px] pt-[28px] pb-[24px] flex flex-col mx-4 md:mx-0 h-[70vh] md:h-[80vh]"
+  style={{ maxWidth: "1080px" }}
+>
         <button
           className="absolute top-[16px] right-[16px] text-[#717171] hover:text-black transition-colors"
           onClick={onClose}

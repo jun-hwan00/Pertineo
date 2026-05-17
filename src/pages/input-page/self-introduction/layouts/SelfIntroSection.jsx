@@ -10,6 +10,7 @@ import BulkInputModal from "../components/BulkInputModal";
 // API
 import { useCreateAnalysis } from "hooks/useCreateAnalysis";
 import { useAnalysisStore } from "stores/analysisStore";
+import { useParseSelfIntro } from "api/parseApi";
 
 const MAX_CARDS = 10;
 const SESSION_KEY = "selfIntroCards";
@@ -30,7 +31,7 @@ function SelfIntroSection() {
   const [cards, setCards] = useState(loadFromSession);
   const [showModal] = useState(false);
   const [showTempSaveModal, setShowTempSaveModal] = useState(false);
-
+  const { mutate: parseSelfIntro, isPending: isParsing } = useParseSelfIntro();
   const { start } = useCreateAnalysis();
   const status = useAnalysisStore((state) => state.status);
   const [showBulkInputModal, setShowBulkInputModal] = useState(false);
@@ -113,7 +114,22 @@ function SelfIntroSection() {
       // 에러 처리 (토스트 메시지 등 추가 가능)
     }
   };
-
+const handleBulkConfirm = (content) => {
+  parseSelfIntro(content, {
+    onSuccess: ({ question_list, answer_list }) => {
+      const parsed = question_list.map((question, index) => ({
+        id: Date.now() + index,
+        question,
+        content: answer_list[index] || "",
+      }));
+      setCards(parsed.slice(0, MAX_CARDS));
+      setShowBulkInputModal(false);
+    },
+    onError: (error) => {
+      console.error("파싱 실패:", error);
+    },
+  });
+};
   return (
     <div className="w-full max-w-[1080px] mx-auto mt-[24px] md:mt-[72px] pb-[200px]">
       <div className="flex items-center justify-between mb-[24px]">
@@ -186,9 +202,8 @@ function SelfIntroSection() {
       {showBulkInputModal && (
   <BulkInputModal
     onClose={() => setShowBulkInputModal(false)}
-    onConfirm={({ question, content }) => {
-      console.log(question, content);
-    }}
+    onConfirm={handleBulkConfirm}
+    isLoading={isParsing}
   />
 )}
     </div>

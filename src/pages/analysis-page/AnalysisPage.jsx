@@ -95,7 +95,14 @@ function AnalysisPage() {
             <div className="mt-[72px] px-[40px]">
               {(() => {
                 const C = SECTION_COMPONENTS[activeNav];
-                return <C onNext={handleNext} onPrev={handlePrev} />;
+              return (
+                      <C
+                        onNext={handleNext}
+                        onPrev={handlePrev}
+                        onDownload={download}     
+                        isGenerating={isGenerating} 
+                      />
+                    );
               })()}
             </div>
           </div>

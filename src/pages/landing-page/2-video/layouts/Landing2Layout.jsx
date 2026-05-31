@@ -1,4 +1,4 @@
-import landingVideo from "assets/videos/Pertineo_1.mp4";
+import landingVideo from "assets/videos/Pertineo_2.mp4";
 
 function Landing2Layout() {
   return (

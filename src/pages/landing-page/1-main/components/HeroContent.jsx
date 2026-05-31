@@ -67,7 +67,7 @@ function HeroContent() {
       </div>
 
       {/* 버튼 영역 */}
-      <div className="flex items-center justify-center h-[40px] md:h-[calc(2.5vw+16px)] mt-[11vh] md:mt-[5.4vh]">
+       <div className="flex items-center justify-center gap-[8px] md:gap-[1.11vw] h-[40px] md:h-[calc(2.5vw+16px)] mt-[11vh] md:mt-[5.4vh] w-full md:w-[26.1vw]">
         {/* <button className="group w-[90px] md:w-[8.33vw] h-full rounded-[4px] border-2 border-white bg-[#ECF1F8]/30 hover:bg-[#ECF1F8]/60 flex items-center justify-center transition-colors">
           <span className="text-[12px] md:text-[1.11vw] font-[500] leading-[150%] text-[#ECF1F8] group-hover:text-white transition-colors">
             예시 리포트
@@ -90,7 +90,7 @@ function HeroContent() {
                     WebkitBackgroundClip: "text",
                     WebkitTextFillColor: "transparent",
                   }
-            }
+              }
           >
             자기소개서 입력하러 가기
           </span>

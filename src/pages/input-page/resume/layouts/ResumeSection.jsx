@@ -230,33 +230,35 @@ function ResumeSection() {
         <TempSaveModal onClose={() => setShowTempSaveModal(false)} />
       )}
       {/* 학력사항 */}
-      <EntryGroupSection
-        caption="학력사항"
-        items={education}
-        onChange={handleEducationChange}
-        required={true}
-        newItem={{ university: "경희대학교", major: "", gpa: "", minor: "" }}
-        placeholders={{
-          university: "대학교명",
-          major: "전공",
-          gpa: "학점 (4.3기준)",
-          minor: "부전공",
-        }}
-        autocompleteResults={eduAutocomplete}
-      />
-      
-      {/* GPA 에러 메시지 */}
-      {educationGPAErrors.some((err) => err !== null) && (
-        <div className="w-full min-[894px]:max-w-[1080px]">
-          {educationGPAErrors.map((error, idx) =>
-            error ? (
-              <div key={idx} className="text-[#E74C3C] text-[14px] font-normal mt-[8px]">
-                {error}
-              </div>
-            ) : null
-          )}
-        </div>
-      )}
+      <div className="flex flex-col items-center w-full">
+        <EntryGroupSection
+          caption="학력사항"
+          items={education}
+          onChange={handleEducationChange}
+          required={true}
+          newItem={{ university: "경희대학교", major: "", gpa: "", minor: "" }}
+          placeholders={{
+            university: "대학교명",
+            major: "전공",
+            gpa: "학점 (4.3기준)",
+            minor: "부전공",
+          }}
+          autocompleteResults={eduAutocomplete}
+        />
+        
+        {/* GPA 에러 메시지 */}
+        {educationGPAErrors.some((err) => err !== null) && (
+          <div className="w-full min-[894px]:max-w-[1080px]">
+            {educationGPAErrors.map((error, idx) =>
+              error ? (
+                <div key={idx} className="text-[#E74C3C] text-[14px] font-normal mt-[8px]">
+                  {error}
+                </div>
+              ) : null
+            )}
+          </div>
+        )}
+      </div>
 
       {/* 경력사항 */}
       <EntryGroupSection

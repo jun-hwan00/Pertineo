@@ -5,10 +5,12 @@ import Button from "../../components/Button";
 import AnalysisButton from "../../components/AnalysisButton";
 import AnalysisModal from "../components/AnalysisModal";
 import TempSaveModal from "../../components/TempSaveModal";
+import BulkInputModal from "../components/BulkInputModal";
 
 // API
 import { useCreateAnalysis } from "hooks/useCreateAnalysis";
 import { useAnalysisStore } from "stores/analysisStore";
+import { useParseSelfIntro } from "api/parseApi";
 
 const MAX_CARDS = 10;
 const SESSION_KEY = "selfIntroCards";
@@ -29,9 +31,10 @@ function SelfIntroSection() {
   const [cards, setCards] = useState(loadFromSession);
   const [showModal] = useState(false);
   const [showTempSaveModal, setShowTempSaveModal] = useState(false);
-
+  const { mutate: parseSelfIntro, isPending: isParsing } = useParseSelfIntro();
   const { start } = useCreateAnalysis();
   const status = useAnalysisStore((state) => state.status);
+  const [showBulkInputModal, setShowBulkInputModal] = useState(false);
 
   useEffect(() => {
     sessionStorage.setItem(SESSION_KEY, JSON.stringify(cards));
@@ -111,12 +114,37 @@ function SelfIntroSection() {
       // 에러 처리 (토스트 메시지 등 추가 가능)
     }
   };
-
+const handleBulkConfirm = (content) => {
+  parseSelfIntro(content, {
+    onSuccess: ({ question_list, answer_list }) => {
+      const parsed = question_list.map((question, index) => ({
+        id: Date.now() + index,
+        question,
+        content: answer_list[index] || "",
+      }));
+      setCards(parsed.slice(0, MAX_CARDS));
+      setShowBulkInputModal(false);
+    },
+    onError: (error) => {
+      console.error("파싱 실패:", error);
+    },
+  });
+};
   return (
     <div className="w-full max-w-[1080px] mx-auto mt-[24px] md:mt-[72px] pb-[200px]">
-      <p className="text-[12px] font-normal leading-[150%] text-[#717171] mb-[24px]">
-        질문과 답변을 한 개 이상 입력해주세요.
-      </p>
+      <div className="flex items-center justify-between mb-[24px]">
+  <p className="text-[12px] font-normal leading-[150%] text-[#717171]">
+    질문과 답변을 한 개 이상 입력해주세요.
+  </p>
+  <Button
+    size="M"
+    variant="secondary"
+     className="!w-[160px] !h-[44px] !font-['Pretendard'] !font-medium !text-[16px] !leading-[150%] !tracking-normal"
+  onClick={() => setShowBulkInputModal(true)}
+  >
+    일괄 입력하기
+  </Button>
+</div>
       <div className="flex flex-col gap-[60px]">
         {cards.map((card, index) => (
           <QuestionCard
@@ -171,6 +199,13 @@ function SelfIntroSection() {
       {showTempSaveModal && (
         <TempSaveModal onClose={() => setShowTempSaveModal(false)} />
       )}
+      {showBulkInputModal && (
+  <BulkInputModal
+    onClose={() => setShowBulkInputModal(false)}
+    onConfirm={handleBulkConfirm}
+    isLoading={isParsing}
+  />
+)}
     </div>
   );
 }

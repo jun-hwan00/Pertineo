@@ -161,8 +161,8 @@ onCodeVerified?.(email);
             </span>  */}
           </div>
 
-          <div className="flex items-center gap-[16px] mt-[12px]">
-            <div className="relative flex-1">
+          <div className="flex items-center gap-[16px] mt-[12px] ">
+            <div className="relative flex-1 ">
               <input
                 type="email"
                 placeholder="이메일 입력"

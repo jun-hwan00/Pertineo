@@ -2,7 +2,7 @@ import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { OrbitControls, ContactShadows, Line } from "@react-three/drei";
 import { Text } from "@react-three/drei";
 import * as THREE from "three";
-import { useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 
 // components
 import Plan from "./Plan";
@@ -256,9 +256,16 @@ export default function ReportGraph({
           : undefined;
   const controlsRef = useRef<any>(null);
   const [isResetting, setIsResetting] = useState(false);
+  const [isMobile, setIsMobile] = useState(() => window.innerWidth <= 500);
+
+  useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth <= 500);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   return (
-    <div className="w-full h-full">
+    <div className="w-full h-full" style={isMobile ? { pointerEvents: "none" } : undefined}>
       <Canvas
         orthographic
         camera={{ zoom: zoom || 35, position: [4, 2.5, 4], fov: 75 }}

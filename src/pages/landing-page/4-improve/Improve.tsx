@@ -55,7 +55,7 @@ export default function Improve() {
       <SubTitle title="개선방식 제안" discription="합격자를 비교분석하여 구직자의 장단점 및 개선 전략을 제공합니다." />
       <div
         ref={ref}
-        className="max-w-screen lg:pr-[120px] min-h-fit lg:w-full flex gap-[7px] mt-[45px] overflow-x-scroll scrollbar-hide"
+        className="w-full lg:pr-[120px] min-h-fit flex gap-[7px] mt-[45px] overflow-x-auto scrollbar-hide"
       >
         {
           cardExplain.map((i, index) =>
@@ -93,7 +93,7 @@ function Card({
 }: CardProps){
   return (
     <div
-      className={`lg:flex-1 min-w-[246px] rounded-lg py-10 px-5 pb-[170px] lg:pb-[220px] relative h-auto min-h-[324px] lg:min-h-[431px] xl:min-h-[440px] transform transition-all duration-700 ${
+      className={`lg:flex-1 shrink-0 min-w-[246px] rounded-lg py-10 px-5 pb-[170px] lg:pb-[220px] relative h-auto min-h-[324px] lg:min-h-[431px] xl:min-h-[440px] transform transition-all duration-700 ${
         isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
       }`}
       style={{ backgroundColor: color, transitionDelay: `${index * 150}ms` }}

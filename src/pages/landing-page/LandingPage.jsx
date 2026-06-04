@@ -9,6 +9,7 @@ import Matrix from "./3-matrix/Matrix";
 import Improve from "./4-improve/Improve";
 import Review from "./5-review/Review";
 import SectionProgressBar from "./components/SectionProgressBar";
+import Start from "./6-start/Start";
 
 function LandingPage() {
   const [mainRef, mainInView] = useInView({ threshold: 0.4 });
@@ -16,6 +17,7 @@ function LandingPage() {
   const [matrixRef, matrixInView] = useInView({ threshold: 0.4 });
   const [improveRef, improveInView] = useInView({ threshold: 0.4 });
   const [reviewRef, reviewInView] = useInView({ threshold: 0.4 });
+  const [startRef, startInView] = useInView({ threshold: 0.4 });
 
   const activeIndex = useMemo(() => {
     const states = [
@@ -24,12 +26,20 @@ function LandingPage() {
       matrixInView,
       improveInView,
       reviewInView,
+      startInView,
     ];
 
     return states.reduce((lastVisibleIndex, isVisible, index) => {
       return isVisible ? index : lastVisibleIndex;
     }, 0);
-  }, [mainInView, videoInView, matrixInView, improveInView, reviewInView]);
+  }, [
+    mainInView,
+    videoInView,
+    matrixInView,
+    improveInView,
+    reviewInView,
+    startInView,
+  ]);
 
   return (
     <div className="h-[100dvh] overflow-hidden">
@@ -38,7 +48,7 @@ function LandingPage() {
       <div className="opacity-0 lg:opacity-100 fixed right-5 top-1/2 -translate-y-1/2 z-50">
         <SectionProgressBar
           index={activeIndex}
-          total={5}
+          total={6}
           onIndexClick={(i) => {
             const ids = [
               "section-main",
@@ -46,6 +56,7 @@ function LandingPage() {
               "section-matrix",
               "section-improve",
               "section-review",
+              "section-start",
             ];
             document
               .getElementById(ids[i])
@@ -81,6 +92,9 @@ function LandingPage() {
 
         <section id="section-review" ref={reviewRef} className="snap-start">
           <Review />
+        </section>
+        <section id="section-start" ref={startRef} className="snap-start">
+          <Start />
         </section>
       </div>
     </div>

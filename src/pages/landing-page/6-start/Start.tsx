@@ -5,7 +5,7 @@ export default function Start() {
   const navigate = useNavigate();
   return (
     <ExplainSectionLayout className="flex justify-center gap-8 bg-gradient-to-b from-[#F4F6F8] to-[#C1D9FF]">
-      <div className="flex flex-col items-center text-[24px]">
+      <div className="flex flex-col items-center md:text-[24px] text-[16px]">
         <div>자기소개서를 입력하고</div>
         <div>
           <span className="font-semibold">AI 역량 분석 기반 컨설팅</span>을 지금

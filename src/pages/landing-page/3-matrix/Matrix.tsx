@@ -4,8 +4,59 @@ import SubTitle from "pages/landing-page/components/SubTitle";
 import Arrow from "../../../assets/icons/Arrow.svg";
 import cn from "utils/cn";
 import ReportGraph from "pages/report/components/ReportGraph";
+import { useState, useEffect, useRef } from "react";
 
 export default function Matrix() {
+  const [isMobile, setIsMobile] = useState(() => window.innerWidth <= 500);
+  const graphRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth <= 500);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  useEffect(() => {
+    if (!isMobile || !graphRef.current) return;
+
+    const el = graphRef.current;
+    let lastY = 0;
+
+    const getScrollParent = (node: HTMLElement): HTMLElement => {
+      let parent = node.parentElement;
+      while (parent) {
+        const { overflowY } = getComputedStyle(parent);
+        if (
+          (overflowY === "scroll" || overflowY === "auto") &&
+          parent.scrollHeight > parent.clientHeight
+        )
+          return parent;
+        parent = parent.parentElement;
+      }
+      return document.documentElement;
+    };
+
+    const onTouchStart = (e: TouchEvent) => {
+      lastY = e.touches[0].clientY;
+      e.stopPropagation();
+    };
+
+    const onTouchMove = (e: TouchEvent) => {
+      e.stopPropagation();
+      const currentY = e.touches[0].clientY;
+      getScrollParent(el).scrollTop += lastY - currentY;
+      lastY = currentY;
+    };
+
+    el.addEventListener("touchstart", onTouchStart, { capture: true, passive: true });
+    el.addEventListener("touchmove", onTouchMove, { capture: true, passive: true });
+
+    return () => {
+      el.removeEventListener("touchstart", onTouchStart, { capture: true });
+      el.removeEventListener("touchmove", onTouchMove, { capture: true });
+    };
+  }, [isMobile]);
+
   return (
     <ExplainSectionLayout>
       <SubTitle
@@ -13,7 +64,7 @@ export default function Matrix() {
         discription="학습 수준(X) · 직무적합 수준(Y) · 수행역량 수준(Z) 을 종합적으로 분석합니다."
       />
       <div className="flex flex-col h-full lg:flex-row items-center justify-center min-lg:pt-[65px]">
-        <div className="h-[416px] w-[416px]">
+        <div ref={graphRef} className="h-[416px] w-[416px]">
           <ReportGraph zoom={50} position={-3} />
         </div>
         <img className="opacity-0 lg:opacity-100" src={Arrow} alt="화살표" />

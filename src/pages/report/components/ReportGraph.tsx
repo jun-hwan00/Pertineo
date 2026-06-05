@@ -2,7 +2,7 @@ import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { OrbitControls, ContactShadows, Line } from "@react-three/drei";
 import { Text } from "@react-three/drei";
 import * as THREE from "three";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 
 // components
 import Plan from "./Plan";
@@ -256,41 +256,21 @@ export default function ReportGraph({
           : undefined;
   const controlsRef = useRef<any>(null);
   const [isResetting, setIsResetting] = useState(false);
-  const [isMobile, setIsMobile] = useState(() => window.innerWidth <= 500);
-  const glRef = useRef<HTMLCanvasElement | null>(null);
-
-  useEffect(() => {
-    const handleResize = () => setIsMobile(window.innerWidth <= 500);
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
-
-  useEffect(() => {
-    if (glRef.current) {
-      glRef.current.style.touchAction = isMobile ? "pan-y" : "none";
-    }
-  }, [isMobile]);
 
   return (
     <div className="w-full h-full">
       <Canvas
         orthographic
         camera={{ zoom: zoom || 35, position: [4, 2.5, 4], fov: 75 }}
-        onCreated={({ gl }) => {
-          glRef.current = gl.domElement;
-          if (isMobile) gl.domElement.style.touchAction = "pan-y";
-        }}
       >
         <ambientLight intensity={0.5} />
         <pointLight position={[10, 10, 10]} />
 
-        {!isMobile && (
-          <ResetCamera
-            controlsRef={controlsRef}
-            isResetting={isResetting}
-            setIsResetting={setIsResetting}
-          />
-        )}
+        <ResetCamera
+          controlsRef={controlsRef}
+          isResetting={isResetting}
+          setIsResetting={setIsResetting}
+        />
 
         <group position={[0, position || -3, 0]}>
           <Axis highlightAxis={highlightAxis} highlightScore={highlightScore} />
@@ -315,7 +295,6 @@ export default function ReportGraph({
         <ContactShadows opacity={0.4} scale={10} blur={2} far={4.5} />
         <OrbitControls
           ref={controlsRef}
-          enabled={!isMobile}
           enableZoom={false}
           rotateSpeed={-1}
           onEnd={() => {

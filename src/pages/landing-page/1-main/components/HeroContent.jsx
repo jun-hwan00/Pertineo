@@ -4,9 +4,11 @@ import KHUxPertineo from "assets/icons/KHUxpertineo.svg";
 import { SESSION_STORAGE_KEY } from "api/sessionApi";
 import { ANALYSIS_REPORT_KEY } from "pages/analysis-page/AnalysisPage";
 import TextMotion from "./TextMotion";
+import DemoReportModal from "./DemoReportModal";
 
 function HeroContent() {
   const [hovered, setHovered] = useState(false);
+  const [showDemo, setShowDemo] = useState(false);
   const navigate = useNavigate();
 
   const handleStart = () => {
@@ -21,6 +23,7 @@ function HeroContent() {
   };
 
   return (
+    <>
     <div className="flex flex-col items-center w-full px-[24px] md:px-0 md:w-[37.2vw] pt-[10vh] md:pt-[18.3vh] pb-[20.1vh]">
       {/* KHU × Pertineo */}
       <div className="flex items-center justify-center h-[36px] md:h-[calc(1.042vw+30px)]">
@@ -68,11 +71,13 @@ function HeroContent() {
 
       {/* 버튼 영역 */}
        <div className="flex items-center justify-center gap-[8px] md:gap-[1.11vw] h-[40px] md:h-[calc(2.5vw+16px)] mt-[11vh] md:mt-[5.4vh] w-full md:w-[26.1vw]">
-        {/* <button className="group w-[90px] md:w-[8.33vw] h-full rounded-[4px] border-2 border-white bg-[#ECF1F8]/30 hover:bg-[#ECF1F8]/60 flex items-center justify-center transition-colors">
+        <button
+          onClick={() => setShowDemo(true)}
+          className="group w-[90px] md:w-[8.33vw] h-full rounded-[4px] border-2 border-white bg-[#ECF1F8]/30 hover:bg-[#ECF1F8]/60 flex items-center justify-center transition-colors">
           <span className="text-[12px] md:text-[1.11vw] font-[500] leading-[150%] text-[#ECF1F8] group-hover:text-white transition-colors">
             예시 리포트
           </span>
-        </button> */}
+        </button>
 
         <button
           className="w-[160px] md:w-[16.67vw] h-full rounded-[4px] bg-white flex items-center justify-center"
@@ -97,6 +102,9 @@ function HeroContent() {
         </button>
       </div>
     </div>
+
+    {showDemo && <DemoReportModal onClose={() => setShowDemo(false)} />}
+    </>
   );
 }
 

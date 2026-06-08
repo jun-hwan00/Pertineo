@@ -59,7 +59,7 @@ export default function AnalysisDiagnosis({
       <section>
         <AnalysisHeader title="3D 평가 세부 결과" />
         {sections.map((section) => (
-          <div className="mb-[10px]">
+          <div key={section.axis} className="mb-[10px]">
             <h3 className="font-semibold text-lg">{section.title}</h3>
             <div className="flex mt-4 w-full gap-10">
               <div className="w-[350px]">
@@ -151,9 +151,9 @@ export default function AnalysisDiagnosis({
             <h3 className="font-semibold text-lg mb-1">요약</h3>
             <div className="text-lg flex flex-col gap-[7px]">
               {evaluationResult?.scoreSummary?.map((summary, index) => (
-                <div className="flex gap-2">
+                <div key={index} className="flex gap-2">
                   <span>• </span>
-                  <p key={index}>{summary}</p>
+                  <p>{summary}</p>
                 </div>
               ))}
             </div>

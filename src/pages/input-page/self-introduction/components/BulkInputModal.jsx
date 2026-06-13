@@ -30,6 +30,7 @@ function BulkInputModal({ onClose, onConfirm }) {
         <h2 className="text-[20px] font-medium text-black mb-[6px]">일괄 입력하기</h2>
         <p className="text-[16px] text-black mb-[20px]">
           전체 내용을 한 번에 작성·붙여넣기하여 입력할 수 있습니다.
+          <span className="text-[13px] text-[#B5B5B5] ml-[8px]">*문항이 많을 경우 분리되는 데 시간이 걸릴 수 있습니다.</span>
         </p>
 
         <div className="border border-[#717171] rounded-[6px] p-[12px] flex flex-col flex-1 min-h-0">

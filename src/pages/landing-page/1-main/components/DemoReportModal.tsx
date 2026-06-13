@@ -59,7 +59,7 @@ export default function DemoReportModal({ onClose }: DemoReportModalProps) {
         reset();
       }
     };
-  }, []);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   const handleNext = () => {
     const idx = SECTION_IDS.indexOf(activeNav);

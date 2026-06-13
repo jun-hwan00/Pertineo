@@ -21,13 +21,43 @@ interface DemoReportModalProps {
 
 export default function DemoReportModal({ onClose }: DemoReportModalProps) {
   const [activeNav, setActiveNav] = useState(SECTION_IDS[0]);
-  const { setFinalData, setPassScoreData, reset } = useAnalysisStore();
+  const {
+    setFinalData,
+    setPassScoreData,
+    reset,
+    normalData,
+    evaluationResult,
+    revisedResult,
+    passScoreData,
+    status,
+  } = useAnalysisStore();
 
   useEffect(() => {
+    // 예시레포트 사용 시 기존 store 데이터 백업
+    const backup = {
+      normalData,
+      evaluationResult,
+      revisedResult,
+      passScoreData,
+      status,
+    };
+
     setFinalData(DEMO_FINAL_STATE);
     setPassScoreData(DEMO_PASS_SCORE);
+
     return () => {
-      reset();
+      // 모달 닫힐 때 백업 데이터 복원
+      if (backup.evaluationResult) {
+        setFinalData({
+          ...DEMO_FINAL_STATE,
+          evaluationResult: backup.evaluationResult,
+          revisedResult: backup.revisedResult!,
+          ...backup.normalData,
+        });
+        setPassScoreData(backup.passScoreData!);
+      } else {
+        reset();
+      }
     };
   }, []);
 
@@ -50,7 +80,7 @@ export default function DemoReportModal({ onClose }: DemoReportModalProps) {
       onClick={onClose}
     >
       <div
-        className="relative bg-[#F9FAFB] w-[90vw] max-w-[1100px] h-[85%] rounded-[12px] overflow-hidden flex flex-col"
+        className="relative bg-[#F9FAFB] w-[70vw] max-w-[1100px] h-[90%] rounded-[12px] overflow-hidden flex flex-col"
         onClick={(e) => e.stopPropagation()}
       >
         {/* 상단 헤더 */}

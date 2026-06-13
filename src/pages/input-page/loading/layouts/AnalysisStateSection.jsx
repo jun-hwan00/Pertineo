@@ -42,8 +42,10 @@ function AnalysisStateSection({ completed, error, title, completedTitle, items, 
   useEffect(() => {
     if (sectionRef.current) {
       requestAnimationFrame(() => {
-        sectionRef.current.style.opacity = "1";
-        sectionRef.current.style.transform = "translateY(0)";
+        if (sectionRef.current) {
+          sectionRef.current.style.opacity = "1";
+          sectionRef.current.style.transform = "translateY(0)";
+        }
       });
     }
   }, []);

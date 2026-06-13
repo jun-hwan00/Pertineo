@@ -23,13 +23,15 @@ export const useCreateAnalysis = () => {
         }
 
         if (event.type === "pass_score") {
-          const { x, y, z, overall } = event.data as any;
-          setPassScoreData({
-            x: Math.ceil(x * 10) / 10,
-            y: Math.ceil(y * 10) / 10,
-            z: Math.ceil(z * 10) / 10,
-            overall,
-          });
+          if (event.data) {
+            const { x, y, z, overall } = event.data as any;
+            setPassScoreData({
+              x: Math.ceil(x * 10) / 10,
+              y: Math.ceil(y * 10) / 10,
+              z: Math.ceil(z * 10) / 10,
+              overall,
+            });
+          }
           return;
         }
 

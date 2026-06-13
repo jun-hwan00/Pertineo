@@ -80,7 +80,7 @@ export default function DemoReportModal({ onClose }: DemoReportModalProps) {
       onClick={onClose}
     >
       <div
-        className="relative bg-[#F9FAFB] w-[95vw] h-[92%] min-[894px]:w-[70vw] min-[894px]:max-w-[1100px] min-[894px]:h-[85%] rounded-[12px] overflow-hidden flex flex-col"
+        className="relative bg-[#F9FAFB] w-[90vw] h-[75%] min-[894px]:w-[65vw] min-[894px]:max-w-[1100px] min-[894px]:h-[85%] rounded-[12px] overflow-hidden flex flex-col"
         onClick={(e) => e.stopPropagation()}
       >
         {/* 상단 헤더 */}
@@ -97,7 +97,9 @@ export default function DemoReportModal({ onClose }: DemoReportModalProps) {
               ×
             </button>
           </div>
-          <AnalysisNavBar active={activeNav} onChange={setActiveNav} />
+          <div className="[&>nav]:mt-[0px]">
+            <AnalysisNavBar active={activeNav} onChange={setActiveNav} />
+          </div>
         </div>
 
         <div className="flex-1 overflow-y-auto">
